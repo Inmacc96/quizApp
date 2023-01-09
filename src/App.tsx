@@ -1,4 +1,5 @@
 import Layout from "./components/Layout";
+import Quiz from "./components/Quiz";
 import GlobalStyle from "./styles/global";
 
 function App() {
@@ -6,7 +7,7 @@ function App() {
     <>
       <GlobalStyle />
       <Layout>
-       <div>Question and Answers</div>
+        <Quiz />
       </Layout>
     </>
   );
