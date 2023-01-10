@@ -23,7 +23,7 @@ export enum Type {
   Multiple = "multiple",
 }
 
-export interface QuizType {
+export interface QuestionType {
   question: string;
   correct_answer: string;
   incorrect_answers: string[];
