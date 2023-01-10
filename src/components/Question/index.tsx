@@ -1,5 +1,6 @@
-import { QuestionType } from "../../interfaces/QuizType";
+import { QuestionType, AnswerType } from "../../interfaces/QuizType";
 import { decode } from "html-entities";
+import { useEffect, useState } from "react";
 import {
   Container,
   Main,
@@ -15,7 +16,29 @@ type QuestionProps = {
 };
 
 const Question = ({ question, currentQuestion }: QuestionProps) => {
-  const { difficulty, question: q, correct_answer } = question;
+  const {
+    difficulty,
+    question: q,
+    correct_answer,
+    incorrect_answers,
+  } = question;
+
+  const [answers, setAnswers] = useState<AnswerType[]>([]);
+
+  useEffect(() => {
+    const incorrectAnswers = incorrect_answers.map((a) => {
+      return { answer: a, isCorrect: false };
+    });
+
+    // Añadir la correcta y desordenar las respuestas
+    const messyAnswers = [
+      ...incorrectAnswers,
+      { answer: correct_answer, isCorrect: true },
+    ].sort(() => Math.random() - 0.5);
+
+    setAnswers(messyAnswers);
+  }, []);
+
   return (
     <Main>
       <Container>

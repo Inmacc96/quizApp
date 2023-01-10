@@ -27,5 +27,10 @@ export interface QuestionType {
   question: string;
   correct_answer: string;
   incorrect_answers: string[];
-  difficulty: Difficulty
+  difficulty: Difficulty;
+}
+
+export interface AnswerType {
+  answer: string;
+  isCorrect: boolean;
 }
