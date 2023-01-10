@@ -8,6 +8,7 @@ import {
   NumberQuestion,
   Answer,
   QuestionStyled,
+  AnswersContainer,
 } from "./styles";
 
 type QuestionProps = {
@@ -49,7 +50,12 @@ const Question = ({ question, currentQuestion }: QuestionProps) => {
         </DifficultyQuestion>
       </Container>
       <QuestionStyled>{decode(q)}</QuestionStyled>
-      <Answer>{correct_answer}</Answer>
+
+      <AnswersContainer>
+        {answers.map((ans) => (
+          <Answer>{ans.answer}</Answer>
+        ))}
+      </AnswersContainer>
     </Main>
   );
 };

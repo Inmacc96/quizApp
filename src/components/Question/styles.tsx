@@ -45,8 +45,14 @@ export const QuestionStyled = styled.p`
   font-weight: 800;
 `;
 
-export const Answer = styled.button`
+export const AnswersContainer = styled.div`
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
+
+export const Answer = styled.button`
   padding: 1rem;
   border: none;
   border-radius: 20px;
@@ -55,6 +61,7 @@ export const Answer = styled.button`
   background-color: #dcd8d1;
   cursor: pointer;
   :hover {
-    background-color: #bbbab8;
+    color: #fff;
+    background-color: #13193e;
   }
 `;
