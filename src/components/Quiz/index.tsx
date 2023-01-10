@@ -2,6 +2,7 @@ import { useState } from "react";
 import Home from "../Home";
 import { QuizType } from "../../interfaces/QuizType";
 import { getApiQuiz } from "../../services/quiz";
+import Loading from "../Loading";
 
 const Quiz = () => {
   const [quiz, setQuiz] = useState<QuizType[]>([]);
@@ -19,7 +20,18 @@ const Quiz = () => {
     }
   };
 
-  return <Home getQuiz={getQuiz} />;
+  return (
+    <>
+      {isLoadingQuiz ? (
+        <Loading />
+      ) : quiz.length > 0 ? (
+        // <Question />
+        <p>The questions are now available</p>
+      ) : (
+        <Home getQuiz={getQuiz} />
+      )}
+    </>
+  );
 };
 
 export default Quiz;
