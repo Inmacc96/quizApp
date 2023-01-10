@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Main, Logo, Button } from "./styles";
+import Home from "../Home";
 import { QuizType } from "../../interfaces/QuizType";
 import { getApiQuiz } from "../../services/quiz";
 
@@ -19,12 +19,7 @@ const Quiz = () => {
     }
   };
 
-  return (
-    <Main>
-      <Logo />
-      <Button onClick={getQuiz}>Start</Button>
-    </Main>
-  );
+  return <Home getQuiz={getQuiz} />;
 };
 
 export default Quiz;
