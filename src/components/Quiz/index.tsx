@@ -11,6 +11,7 @@ const Quiz = () => {
   const [question, setQuestion] = useState<QuestionType>({} as QuestionType);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState<number>(0);
+  const [gameOver, setGameOver] = useState<boolean>(false);
 
   useEffect(() => {
     setQuestion(quiz[currentQuestion - 1]);
@@ -35,7 +36,13 @@ const Quiz = () => {
   };
 
   const nextQuestion = () => {
-    setCurrentQuestion(currentQuestion + 1);
+    if (currentQuestion < 10) {
+      setCurrentQuestion(currentQuestion + 1);
+    }
+    if (currentQuestion === 10) {
+      setGameOver(true);
+      setQuiz([]);
+    }
   };
 
   return (
@@ -48,9 +55,10 @@ const Quiz = () => {
           currentQuestion={currentQuestion}
           updateScore={updateScore}
           nextQuestion={nextQuestion}
+          gameOver={gameOver}
         />
       ) : (
-        <Home getQuiz={getQuiz} />
+        <Home getQuiz={getQuiz} gameOver={gameOver} />
       )}
     </>
   );

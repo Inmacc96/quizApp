@@ -2,13 +2,20 @@ import { Button, Logo, Main } from "./styles";
 
 type HomeProps = {
   getQuiz: () => Promise<void>;
+  gameOver: boolean;
 };
 
-const Home = ({ getQuiz }: HomeProps) => {
+const Home = ({ getQuiz, gameOver }: HomeProps) => {
   return (
     <Main>
-      <Logo />
-      <Button onClick={getQuiz}>Start</Button>
+      {gameOver ? (
+        <Button>Play Again</Button>
+      ) : (
+        <>
+          <Logo />
+          <Button onClick={getQuiz}>Start</Button>
+        </>
+      )}
     </Main>
   );
 };
