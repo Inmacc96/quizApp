@@ -10,6 +10,7 @@ const Quiz = () => {
   const [isLoadingQuiz, setIsLoadingQuiz] = useState(false);
   const [question, setQuestion] = useState<QuestionType>({} as QuestionType);
   const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [score, setScore] = useState<number>(0);
 
   const getQuiz = async () => {
     try {
@@ -25,12 +26,20 @@ const Quiz = () => {
     }
   };
 
+  const updateScore = () => {
+    setScore(score + 1);
+  };
+
   return (
     <>
       {isLoadingQuiz ? (
         <Loading />
       ) : quiz.length > 0 ? (
-        <Question question={question} currentQuestion={currentQuestion} />
+        <Question
+          question={question}
+          currentQuestion={currentQuestion}
+          updateScore={updateScore}
+        />
       ) : (
         <Home getQuiz={getQuiz} />
       )}

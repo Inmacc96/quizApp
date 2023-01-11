@@ -14,9 +14,14 @@ import {
 type QuestionProps = {
   question: QuestionType;
   currentQuestion: number;
+  updateScore: () => void;
 };
 
-const Question = ({ question, currentQuestion }: QuestionProps) => {
+const Question = ({
+  question,
+  currentQuestion,
+  updateScore,
+}: QuestionProps) => {
   const {
     difficulty,
     question: q,
@@ -48,6 +53,11 @@ const Question = ({ question, currentQuestion }: QuestionProps) => {
     };
 
     setUserAnswer(userAnswerUpdated);
+
+    // Sumar el score si ha acertado
+    if (userAnswerUpdated.answerselected === userAnswerUpdated.correctAnswer) {
+      updateScore();
+    }
   };
 
   return (
