@@ -14,7 +14,9 @@ const Quiz = () => {
   const [gameOver, setGameOver] = useState<boolean>(false);
 
   useEffect(() => {
-    setQuestion(quiz[currentQuestion - 1]);
+    if (currentQuestion > 1) {
+      setQuestion(quiz[currentQuestion - 1]);
+    }
   }, [currentQuestion]);
 
   const getQuiz = async () => {
@@ -42,6 +44,8 @@ const Quiz = () => {
     if (currentQuestion === 10) {
       setGameOver(true);
       setQuiz([]);
+      setQuestion({} as QuestionType);
+      setCurrentQuestion(0);
     }
   };
 
