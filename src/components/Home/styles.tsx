@@ -48,3 +48,9 @@ export const ScoreContainer = styled.div`
     margin-top: 1.6rem;
   }
 `;
+
+export const ButtonsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+`;

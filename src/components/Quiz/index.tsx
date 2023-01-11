@@ -49,6 +49,17 @@ const Quiz = () => {
     }
   };
 
+  const playAgain = () => {
+    setScore(0);
+    setGameOver(false);
+    getQuiz();
+  };
+
+  const backHome = () => {
+    setScore(0);
+    setGameOver(false);
+  };
+
   return (
     <>
       {isLoadingQuiz ? (
@@ -61,7 +72,13 @@ const Quiz = () => {
           nextQuestion={nextQuestion}
         />
       ) : (
-        <Home getQuiz={getQuiz} gameOver={gameOver} score={score} />
+        <Home
+          getQuiz={getQuiz}
+          gameOver={gameOver}
+          score={score}
+          playAgain={playAgain}
+          backHome={backHome}
+        />
       )}
     </>
   );
