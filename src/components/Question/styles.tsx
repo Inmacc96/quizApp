@@ -52,16 +52,28 @@ export const AnswersContainer = styled.div`
   gap: 1rem;
 `;
 
-export const Answer = styled.button`
+export const Answer = styled.button<{
+  isClicked: Boolean;
+  userClicked: Boolean;
+  isCorrect: Boolean;
+}>`
   padding: 1rem;
   border: none;
   border-radius: 20px;
   font-weight: 700;
-  color: #000;
-  background-color: #dcd8d1;
+  color: #13193e;
+  background-color: ${(props) =>
+    props.isCorrect
+      ? "#108407"
+      : !props.isCorrect && props.userClicked
+      ? "#A41910"
+      : "#dcd8d1"};
   cursor: pointer;
   :hover {
-    color: #fff;
-    background-color: #13193e;
+    color: ${props => !props.isClicked && "#fff"};
+    background-color:  ${props => !props.isClicked && "#13193e"};
+  }
+  :disabled {
+    cursor: default;
   }
 `;

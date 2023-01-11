@@ -30,7 +30,8 @@ export interface QuestionType {
   difficulty: Difficulty;
 }
 
-export interface AnswerType {
-  answer: string;
-  isCorrect: boolean;
+export interface UserAnswerType {
+  question: string;
+  answerselected: string;
+  correctAnswer: string;
 }
