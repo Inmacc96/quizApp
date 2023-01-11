@@ -17,7 +17,6 @@ type QuestionProps = {
   currentQuestion: number;
   updateScore: () => void;
   nextQuestion: () => void;
-  gameOver: boolean;
 };
 
 const Question = ({
@@ -25,7 +24,6 @@ const Question = ({
   currentQuestion,
   updateScore,
   nextQuestion,
-  gameOver,
 }: QuestionProps) => {
   const {
     difficulty,
@@ -98,7 +96,7 @@ const Question = ({
       </AnswersContainer>
       {userAnswer.answerselected && (
         <NextButton onClick={handleClickNext}>
-          {gameOver ? "End" : "Next"}
+          {currentQuestion === 10 ? "End" : "Next"}
         </NextButton>
       )}
     </Main>

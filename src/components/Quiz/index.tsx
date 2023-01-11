@@ -55,7 +55,6 @@ const Quiz = () => {
           currentQuestion={currentQuestion}
           updateScore={updateScore}
           nextQuestion={nextQuestion}
-          gameOver={gameOver}
         />
       ) : (
         <Home getQuiz={getQuiz} gameOver={gameOver} score={score} />
