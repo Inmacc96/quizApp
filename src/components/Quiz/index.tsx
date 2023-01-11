@@ -58,7 +58,7 @@ const Quiz = () => {
           gameOver={gameOver}
         />
       ) : (
-        <Home getQuiz={getQuiz} gameOver={gameOver} />
+        <Home getQuiz={getQuiz} gameOver={gameOver} score={score} />
       )}
     </>
   );
