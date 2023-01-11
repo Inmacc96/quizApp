@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Home from "../Home";
 import { QuestionType } from "../../interfaces/QuizType";
 import { getApiQuiz } from "../../services/quiz";
@@ -11,6 +11,10 @@ const Quiz = () => {
   const [question, setQuestion] = useState<QuestionType>({} as QuestionType);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState<number>(0);
+
+  useEffect(() => {
+    setQuestion(quiz[currentQuestion - 1]);
+  }, [currentQuestion]);
 
   const getQuiz = async () => {
     try {
@@ -30,6 +34,10 @@ const Quiz = () => {
     setScore(score + 1);
   };
 
+  const nextQuestion = () => {
+    setCurrentQuestion(currentQuestion + 1);
+  };
+
   return (
     <>
       {isLoadingQuiz ? (
@@ -39,6 +47,7 @@ const Quiz = () => {
           question={question}
           currentQuestion={currentQuestion}
           updateScore={updateScore}
+          nextQuestion={nextQuestion}
         />
       ) : (
         <Home getQuiz={getQuiz} />

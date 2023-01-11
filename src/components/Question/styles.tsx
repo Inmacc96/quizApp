@@ -70,10 +70,27 @@ export const Answer = styled.button<{
       : "#dcd8d1"};
   cursor: pointer;
   :hover {
-    color: ${props => !props.isClicked && "#fff"};
-    background-color:  ${props => !props.isClicked && "#13193e"};
+    color: ${(props) => !props.isClicked && "#fff"};
+    background-color: ${(props) => !props.isClicked && "#13193e"};
   }
   :disabled {
     cursor: default;
+  }
+`;
+
+export const NextButton = styled.button`
+  padding: 0.8rem 1.2rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #212955;
+  color: #fff;
+  transition-property: background-color;
+  transition-duration: 2s;
+
+  :hover {
+    background-color: #13193e;
   }
 `;

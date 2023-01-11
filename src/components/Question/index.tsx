@@ -9,18 +9,21 @@ import {
   Answer,
   QuestionStyled,
   AnswersContainer,
+  NextButton,
 } from "./styles";
 
 type QuestionProps = {
   question: QuestionType;
   currentQuestion: number;
   updateScore: () => void;
+  nextQuestion: () => void;
 };
 
 const Question = ({
   question,
   currentQuestion,
   updateScore,
+  nextQuestion,
 }: QuestionProps) => {
   const {
     difficulty,
@@ -42,7 +45,7 @@ const Question = ({
     );
 
     setAnswers(messyAnswers);
-  }, []);
+  }, [question]);
 
   const handleClickAnswer = (answer: string): void => {
     setisClicked(true);
@@ -58,6 +61,12 @@ const Question = ({
     if (userAnswerUpdated.answerselected === userAnswerUpdated.correctAnswer) {
       updateScore();
     }
+  };
+
+  const handleClickNext = () => {
+    setisClicked(false);
+    setUserAnswer({} as UserAnswerType);
+    nextQuestion();
   };
 
   return (
@@ -85,6 +94,9 @@ const Question = ({
           </Answer>
         ))}
       </AnswersContainer>
+      {userAnswer.answerselected && (
+        <NextButton onClick={handleClickNext}> Next</NextButton>
+      )}
     </Main>
   );
 };
