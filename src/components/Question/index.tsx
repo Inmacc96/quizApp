@@ -95,7 +95,7 @@ const Question = ({
         ))}
       </AnswersContainer>
       {userAnswer.answerselected && (
-        <NextButton onClick={handleClickNext}>
+        <NextButton data-testid="next-button" onClick={handleClickNext}>
           {currentQuestion === 10 ? "End" : "Next"}
         </NextButton>
       )}
