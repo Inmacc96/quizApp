@@ -4,6 +4,7 @@ import userEvent from "@testing-library/user-event";
 import Question from ".";
 import { Difficulty } from "../../interfaces/QuizType";
 import { decode } from "html-entities";
+import helpers from "../../helpers";
 
 describe("<Question />", () => {
   test("renders correctly", () => {
@@ -187,5 +188,43 @@ describe("<Question />", () => {
     await user.click(btnNext);
 
     expect(nextQuestion).toBeCalledTimes(1);
+  });
+
+  test("the function unOrderAnswers is called when the component is rendered", async () => {
+    const currentQuestion = 1;
+    const question = {
+      question:
+        "Which anime heavily features music from the genre &quot;Eurobeat&quot;?",
+      correct_answer: "Initial D",
+      incorrect_answers: ["Wangan Midnight", "Kino no Tabi", "Cowboy Bebop"],
+      difficulty: Difficulty.Easy,
+    };
+    const updateScore = vi.fn();
+    const nextQuestion = vi.fn();
+
+    const unsortAnswersSpy = vi.spyOn(helpers, "unsortAnswers");
+
+    render(
+      <Question
+        question={question}
+        currentQuestion={currentQuestion}
+        updateScore={updateScore}
+        nextQuestion={nextQuestion}
+      />
+    );
+
+    expect(unsortAnswersSpy).toHaveBeenCalled();
+
+    const expectedAnswers = [
+      ...question.incorrect_answers,
+      question.correct_answer,
+    ];
+    const messyAnswers = unsortAnswersSpy.mock.results[0].value;
+    console.log(messyAnswers)
+
+    expect(messyAnswers).toHaveLength(expectedAnswers.length);
+    expect(messyAnswers).toEqual(expect.arrayContaining(expectedAnswers));
+
+    unsortAnswersSpy.mockRestore();
   });
 });
