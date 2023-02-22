@@ -1,6 +1,7 @@
 import { QuestionType, UserAnswerType } from "../../interfaces/QuizType";
 import { decode } from "html-entities";
 import { useEffect, useState } from "react";
+import helpers from "../../helpers";
 import {
   Container,
   Main,
@@ -40,9 +41,10 @@ const Question = ({
 
   useEffect(() => {
     // Añadir la correcta y desordenar las respuestas
-    const messyAnswers = [...incorrect_answers, correct_answer].sort(
-      () => Math.random() - 0.5
-    );
+    const messyAnswers = helpers.unsortAnswers([
+      ...incorrect_answers,
+      correct_answer,
+    ]);
 
     setAnswers(messyAnswers);
   }, [question]);
