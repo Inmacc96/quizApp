@@ -190,6 +190,38 @@ describe("<Question />", () => {
     expect(nextQuestion).toBeCalledTimes(1);
   });
 
+  test("clicking on an answer in question 10, the end button appears", async () => {
+    const user = userEvent.setup();
+
+    const currentQuestion = 10;
+    const question = {
+      question:
+        "Which anime heavily features music from the genre &quot;Eurobeat&quot;?",
+      correct_answer: "Initial D",
+      incorrect_answers: ["Wangan Midnight", "Kino no Tabi", "Cowboy Bebop"],
+      difficulty: Difficulty.Easy,
+    };
+    const updateScore = vi.fn();
+    const nextQuestion = vi.fn();
+
+    const component = render(
+      <Question
+        question={question}
+        currentQuestion={currentQuestion}
+        updateScore={updateScore}
+        nextQuestion={nextQuestion}
+      />
+    );
+
+    const correctAnswerButton = component.getByText(question.correct_answer);
+    await user.click(correctAnswerButton);
+
+    const btnEnd = component.getByTestId("next-button");
+    expect(btnEnd).toBeInTheDocument();
+    expect(btnEnd.textContent).toBe("End");
+    expect(btnEnd.textContent).not.toBe("Next");
+  });
+
   test("the function unOrderAnswers is called when the component is rendered", async () => {
     const currentQuestion = 1;
     const question = {
@@ -220,7 +252,6 @@ describe("<Question />", () => {
       question.correct_answer,
     ];
     const messyAnswers = unsortAnswersSpy.mock.results[0].value;
-    console.log(messyAnswers)
 
     expect(messyAnswers).toHaveLength(expectedAnswers.length);
     expect(messyAnswers).toEqual(expect.arrayContaining(expectedAnswers));
