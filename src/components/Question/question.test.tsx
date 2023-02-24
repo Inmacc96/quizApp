@@ -2,7 +2,7 @@ import { describe, test, vi, expect } from "vitest";
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Question from ".";
-import { Difficulty } from "../../interfaces/QuizType";
+import { Difficulty, FiltersQuiz } from "../../interfaces/QuizType";
 import { decode } from "html-entities";
 import helpers from "../../helpers";
 
@@ -18,6 +18,12 @@ describe("<Question />", () => {
     };
     const updateScore = vi.fn();
     const nextQuestion = vi.fn();
+    const filtersQuiz: FiltersQuiz = {
+      n_questions: "10",
+      difficulty: "",
+      type: "",
+      categories: "",
+    };
 
     const component = render(
       <Question
@@ -25,6 +31,7 @@ describe("<Question />", () => {
         currentQuestion={currentQuestion}
         updateScore={updateScore}
         nextQuestion={nextQuestion}
+        filtersQuiz={filtersQuiz}
       />
     );
 
@@ -49,6 +56,12 @@ describe("<Question />", () => {
     };
     const updateScore = vi.fn();
     const nextQuestion = vi.fn();
+    const filtersQuiz: FiltersQuiz = {
+      n_questions: "10",
+      difficulty: "",
+      type: "",
+      categories: "",
+    };
 
     const component = render(
       <Question
@@ -56,6 +69,7 @@ describe("<Question />", () => {
         currentQuestion={currentQuestion}
         updateScore={updateScore}
         nextQuestion={nextQuestion}
+        filtersQuiz={filtersQuiz}
       />
     );
 
@@ -81,6 +95,12 @@ describe("<Question />", () => {
     };
     const updateScore = vi.fn();
     const nextQuestion = vi.fn();
+    const filtersQuiz: FiltersQuiz = {
+      n_questions: "10",
+      difficulty: "",
+      type: "",
+      categories: "",
+    };
 
     const component = render(
       <Question
@@ -88,6 +108,7 @@ describe("<Question />", () => {
         currentQuestion={currentQuestion}
         updateScore={updateScore}
         nextQuestion={nextQuestion}
+        filtersQuiz={filtersQuiz}
       />
     );
 
@@ -110,6 +131,12 @@ describe("<Question />", () => {
     };
     const updateScore = vi.fn();
     const nextQuestion = vi.fn();
+    const filtersQuiz: FiltersQuiz = {
+      n_questions: "10",
+      difficulty: "",
+      type: "",
+      categories: "",
+    };
 
     const component = render(
       <Question
@@ -117,6 +144,7 @@ describe("<Question />", () => {
         currentQuestion={currentQuestion}
         updateScore={updateScore}
         nextQuestion={nextQuestion}
+        filtersQuiz={filtersQuiz}
       />
     );
 
@@ -141,6 +169,12 @@ describe("<Question />", () => {
     };
     const updateScore = vi.fn();
     const nextQuestion = vi.fn();
+    const filtersQuiz: FiltersQuiz = {
+      n_questions: "10",
+      difficulty: "",
+      type: "",
+      categories: "",
+    };
 
     const component = render(
       <Question
@@ -148,6 +182,7 @@ describe("<Question />", () => {
         currentQuestion={currentQuestion}
         updateScore={updateScore}
         nextQuestion={nextQuestion}
+        filtersQuiz={filtersQuiz}
       />
     );
 
@@ -171,6 +206,12 @@ describe("<Question />", () => {
     };
     const updateScore = vi.fn();
     const nextQuestion = vi.fn();
+    const filtersQuiz: FiltersQuiz = {
+      n_questions: "10",
+      difficulty: "",
+      type: "",
+      categories: "",
+    };
 
     const component = render(
       <Question
@@ -178,6 +219,7 @@ describe("<Question />", () => {
         currentQuestion={currentQuestion}
         updateScore={updateScore}
         nextQuestion={nextQuestion}
+        filtersQuiz={filtersQuiz}
       />
     );
 
@@ -203,6 +245,12 @@ describe("<Question />", () => {
     };
     const updateScore = vi.fn();
     const nextQuestion = vi.fn();
+    const filtersQuiz: FiltersQuiz = {
+      n_questions: "10",
+      difficulty: "",
+      type: "",
+      categories: "",
+    };
 
     const component = render(
       <Question
@@ -210,6 +258,7 @@ describe("<Question />", () => {
         currentQuestion={currentQuestion}
         updateScore={updateScore}
         nextQuestion={nextQuestion}
+        filtersQuiz={filtersQuiz}
       />
     );
 
@@ -234,14 +283,22 @@ describe("<Question />", () => {
     const updateScore = vi.fn();
     const nextQuestion = vi.fn();
 
+    const filtersQuiz: FiltersQuiz = {
+      n_questions: "10",
+      difficulty: "",
+      type: "",
+      categories: "",
+    };
+
     const unsortAnswersSpy = vi.spyOn(helpers, "unsortAnswers");
 
-    render(
+    const component = render(
       <Question
         question={question}
         currentQuestion={currentQuestion}
         updateScore={updateScore}
         nextQuestion={nextQuestion}
+        filtersQuiz={filtersQuiz}
       />
     );
 
