@@ -1,4 +1,4 @@
-import { DIFFICULTY } from "../../constants";
+import { DIFFICULTY, TYPE_QUIZ } from "../../constants";
 import {
   Button,
   ButtonsContainer,
@@ -6,11 +6,14 @@ import {
   Main,
   ScoreContainer,
   Select,
+  FiltersContainer
 } from "./styles";
 
 type HomeProps = {
   difficulty: string;
   selectDifficulty: (value: string) => void;
+  typeQuiz: string;
+  selectTypeQuiz: (value: string) => void;
   getQuiz: () => Promise<void>;
   gameOver: boolean;
   score: number;
@@ -21,6 +24,8 @@ type HomeProps = {
 const Home = ({
   difficulty,
   selectDifficulty,
+  typeQuiz,
+  selectTypeQuiz,
   getQuiz,
   gameOver,
   score,
@@ -31,6 +36,12 @@ const Home = ({
     e: React.ChangeEvent<HTMLSelectElement>
   ) => {
     selectDifficulty(e.target.value);
+  };
+
+  const handleChangeSelectTypeQuiz = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    selectTypeQuiz(e.target.value);
   };
 
   return (
@@ -51,13 +62,22 @@ const Home = ({
       ) : (
         <>
           <Logo />
-          <Select value={difficulty} onChange={handleChangeSelectDifficulty}>
-            {DIFFICULTY.map((dif) => (
-              <option key={dif.value} value={dif.value}>
-                {dif.label}
-              </option>
-            ))}
-          </Select>
+          <FiltersContainer>
+            <Select value={difficulty} onChange={handleChangeSelectDifficulty}>
+              {DIFFICULTY.map((dif) => (
+                <option key={dif.value} value={dif.value}>
+                  {dif.label}
+                </option>
+              ))}
+            </Select>
+            <Select value={typeQuiz} onChange={handleChangeSelectTypeQuiz}>
+              {TYPE_QUIZ.map((type) => (
+                <option key={type.value} value={type.value}>
+                  {type.label}
+                </option>
+              ))}
+            </Select>
+          </FiltersContainer>
           <Button onClick={getQuiz}>Start</Button>
         </>
       )}

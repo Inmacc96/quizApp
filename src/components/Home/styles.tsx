@@ -17,6 +17,11 @@ export const Logo = styled.div`
   background-size: cover;
 `;
 
+export const FiltersContainer = styled.div`
+  display: flex;
+  gap: 2rem;
+`;
+
 export const Select = styled.select`
   padding: 0.5rem;
   border: none;

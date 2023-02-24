@@ -7,6 +7,7 @@ import Question from "../Question";
 
 const Quiz = () => {
   const [difficulty, setDifficulty] = useState("any");
+  const [typeQuiz, setTypeQuiz] = useState("any");
   const [quiz, setQuiz] = useState<QuestionType[]>([]);
   const [isLoadingQuiz, setIsLoadingQuiz] = useState(false);
   const [question, setQuestion] = useState<QuestionType>({} as QuestionType);
@@ -24,12 +25,18 @@ const Quiz = () => {
     setDifficulty(value);
   };
 
+  const selectTypeQuiz = (value: string) => {
+    setTypeQuiz(value);
+  };
+
   const getQuiz = async () => {
     try {
       setIsLoadingQuiz(true);
+
       const url = `https://opentdb.com/api.php?amount=10${
         difficulty !== "any" ? `&difficulty=${difficulty}` : ""
-      }`;
+      }${typeQuiz !== "any" ? `&type=${typeQuiz}` : ""}`;
+
       const quizFromApi = await getApiQuiz(url);
       setQuiz(quizFromApi);
       setQuestion(quizFromApi[0]);
@@ -83,6 +90,8 @@ const Quiz = () => {
         <Home
           difficulty={difficulty}
           selectDifficulty={selectDifficulty}
+          typeQuiz={typeQuiz}
+          selectTypeQuiz={selectTypeQuiz}
           getQuiz={getQuiz}
           gameOver={gameOver}
           score={score}
