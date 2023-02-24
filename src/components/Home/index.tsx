@@ -1,4 +1,5 @@
 import { DIFFICULTY, TYPE_QUIZ } from "../../constants";
+import { FiltersQuiz } from "../../interfaces/QuizType";
 import {
   Button,
   ButtonsContainer,
@@ -6,14 +7,12 @@ import {
   Main,
   ScoreContainer,
   Select,
-  FiltersContainer
+  FiltersContainer,
 } from "./styles";
 
 type HomeProps = {
-  difficulty: string;
-  selectDifficulty: (value: string) => void;
-  typeQuiz: string;
-  selectTypeQuiz: (value: string) => void;
+  filtersQuiz: FiltersQuiz;
+  selectFilters: (value: FiltersQuiz) => void;
   getQuiz: () => Promise<void>;
   gameOver: boolean;
   score: number;
@@ -22,26 +21,20 @@ type HomeProps = {
 };
 
 const Home = ({
-  difficulty,
-  selectDifficulty,
-  typeQuiz,
-  selectTypeQuiz,
+  filtersQuiz,
+  selectFilters,
   getQuiz,
   gameOver,
   score,
   playAgain,
   backHome,
 }: HomeProps) => {
-  const handleChangeSelectDifficulty = (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    selectDifficulty(e.target.value);
-  };
+  const { difficulty, type } = filtersQuiz;
 
-  const handleChangeSelectTypeQuiz = (
+  const handleChangeSelectFilters = (
     e: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    selectTypeQuiz(e.target.value);
+    selectFilters({...filtersQuiz, [e.target.name]: e.target.value});
   };
 
   return (
@@ -63,14 +56,22 @@ const Home = ({
         <>
           <Logo />
           <FiltersContainer>
-            <Select value={difficulty} onChange={handleChangeSelectDifficulty}>
+            <Select
+              name="difficulty"
+              value={filtersQuiz.difficulty}
+              onChange={handleChangeSelectFilters}
+            >
               {DIFFICULTY.map((dif) => (
                 <option key={dif.value} value={dif.value}>
                   {dif.label}
                 </option>
               ))}
             </Select>
-            <Select value={typeQuiz} onChange={handleChangeSelectTypeQuiz}>
+            <Select
+              name="type"
+              value={filtersQuiz.type}
+              onChange={handleChangeSelectFilters}
+            >
               {TYPE_QUIZ.map((type) => (
                 <option key={type.value} value={type.value}>
                   {type.label}

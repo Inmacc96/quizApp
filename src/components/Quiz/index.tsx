@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import Home from "../Home";
-import { QuestionType } from "../../interfaces/QuizType";
+import { FiltersQuiz, QuestionType } from "../../interfaces/QuizType";
 import { getApiQuiz } from "../../services/quiz";
 import Loading from "../Loading";
 import Question from "../Question";
 
 const Quiz = () => {
-  const [difficulty, setDifficulty] = useState("any");
-  const [typeQuiz, setTypeQuiz] = useState("any");
+  const [filtersQuiz, setFiltersQuiz] = useState<FiltersQuiz>({
+    difficulty: "",
+    type: "",
+  });
   const [quiz, setQuiz] = useState<QuestionType[]>([]);
   const [isLoadingQuiz, setIsLoadingQuiz] = useState(false);
   const [question, setQuestion] = useState<QuestionType>({} as QuestionType);
@@ -21,12 +23,8 @@ const Quiz = () => {
     }
   }, [currentQuestion]);
 
-  const selectDifficulty = (value: string) => {
-    setDifficulty(value);
-  };
-
-  const selectTypeQuiz = (value: string) => {
-    setTypeQuiz(value);
+  const selectFilters = (value: FiltersQuiz) => {
+    setFiltersQuiz(value);
   };
 
   const getQuiz = async () => {
@@ -34,9 +32,10 @@ const Quiz = () => {
       setIsLoadingQuiz(true);
 
       const url = `https://opentdb.com/api.php?amount=10${
-        difficulty !== "any" ? `&difficulty=${difficulty}` : ""
-      }${typeQuiz !== "any" ? `&type=${typeQuiz}` : ""}`;
-
+        filtersQuiz.difficulty !== ""
+          ? `&difficulty=${filtersQuiz.difficulty}`
+          : ""
+      }${filtersQuiz.type !== "" ? `&type=${filtersQuiz.type}` : ""}`;
       const quizFromApi = await getApiQuiz(url);
       setQuiz(quizFromApi);
       setQuestion(quizFromApi[0]);
@@ -88,10 +87,8 @@ const Quiz = () => {
         />
       ) : (
         <Home
-          difficulty={difficulty}
-          selectDifficulty={selectDifficulty}
-          typeQuiz={typeQuiz}
-          selectTypeQuiz={selectTypeQuiz}
+          filtersQuiz={filtersQuiz}
+          selectFilters={selectFilters}
           getQuiz={getQuiz}
           gameOver={gameOver}
           score={score}

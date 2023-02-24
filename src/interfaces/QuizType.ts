@@ -35,3 +35,8 @@ export interface UserAnswerType {
   answerselected: string;
   correctAnswer: string;
 }
+
+export interface FiltersQuiz {
+  difficulty: Difficulty | "";
+  type: Type | "";
+}
