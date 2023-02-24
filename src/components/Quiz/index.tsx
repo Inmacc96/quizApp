@@ -9,6 +9,7 @@ const Quiz = () => {
   const [filtersQuiz, setFiltersQuiz] = useState<FiltersQuiz>({
     difficulty: "",
     type: "",
+    categories: "",
   });
   const [quiz, setQuiz] = useState<QuestionType[]>([]);
   const [isLoadingQuiz, setIsLoadingQuiz] = useState(false);
@@ -35,7 +36,12 @@ const Quiz = () => {
         filtersQuiz.difficulty !== ""
           ? `&difficulty=${filtersQuiz.difficulty}`
           : ""
-      }${filtersQuiz.type !== "" ? `&type=${filtersQuiz.type}` : ""}`;
+      }${filtersQuiz.type !== "" ? `&type=${filtersQuiz.type}` : ""}${
+        filtersQuiz.categories !== ""
+          ? `&category=${+filtersQuiz.categories}`
+          : ""
+      }`;
+
       const quizFromApi = await getApiQuiz(url);
       setQuiz(quizFromApi);
       setQuestion(quizFromApi[0]);

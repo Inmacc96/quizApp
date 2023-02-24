@@ -1,4 +1,4 @@
-import { DIFFICULTY, TYPE_QUIZ } from "../../constants";
+import { DIFFICULTY, TYPE_QUIZ, CATEGORIES } from "../../constants";
 import { FiltersQuiz } from "../../interfaces/QuizType";
 import {
   Button,
@@ -29,12 +29,12 @@ const Home = ({
   playAgain,
   backHome,
 }: HomeProps) => {
-  const { difficulty, type } = filtersQuiz;
+  const { difficulty, type, categories } = filtersQuiz;
 
   const handleChangeSelectFilters = (
     e: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    selectFilters({...filtersQuiz, [e.target.name]: e.target.value});
+    selectFilters({ ...filtersQuiz, [e.target.name]: e.target.value });
   };
 
   return (
@@ -58,7 +58,7 @@ const Home = ({
           <FiltersContainer>
             <Select
               name="difficulty"
-              value={filtersQuiz.difficulty}
+              value={difficulty}
               onChange={handleChangeSelectFilters}
             >
               {DIFFICULTY.map((dif) => (
@@ -69,12 +69,23 @@ const Home = ({
             </Select>
             <Select
               name="type"
-              value={filtersQuiz.type}
+              value={type}
               onChange={handleChangeSelectFilters}
             >
               {TYPE_QUIZ.map((type) => (
                 <option key={type.value} value={type.value}>
                   {type.label}
+                </option>
+              ))}
+            </Select>
+            <Select
+              name="categories"
+              value={categories}
+              onChange={handleChangeSelectFilters}
+            >
+              {CATEGORIES.map((category) => (
+                <option key={category.value} value={category.value}>
+                  {category.label}
                 </option>
               ))}
             </Select>
