@@ -22,7 +22,8 @@ const Quiz = () => {
   const getQuiz = async () => {
     try {
       setIsLoadingQuiz(true);
-      const quizFromApi = await getApiQuiz();
+      const url = "https://opentdb.com/api.php?amount=10";
+      const quizFromApi = await getApiQuiz(url);
       setQuiz(quizFromApi);
       setQuestion(quizFromApi[0]);
       setCurrentQuestion(1);
