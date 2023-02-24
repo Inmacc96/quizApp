@@ -1,4 +1,9 @@
-import { DIFFICULTY, TYPE_QUIZ, CATEGORIES } from "../../constants";
+import {
+  DIFFICULTY,
+  TYPE_QUIZ,
+  CATEGORIES,
+  N_QUESTIONS,
+} from "../../constants";
 import { FiltersQuiz } from "../../interfaces/QuizType";
 import {
   Button,
@@ -29,7 +34,7 @@ const Home = ({
   playAgain,
   backHome,
 }: HomeProps) => {
-  const { difficulty, type, categories } = filtersQuiz;
+  const { n_questions, difficulty, type, categories } = filtersQuiz;
 
   const handleChangeSelectFilters = (
     e: React.ChangeEvent<HTMLSelectElement>
@@ -44,7 +49,7 @@ const Home = ({
           <ScoreContainer>
             <p>
               Your score is <br />
-              <span>{score}/10</span>
+              <span>{score}/{n_questions}</span>
             </p>
           </ScoreContainer>
           <ButtonsContainer>
@@ -56,6 +61,17 @@ const Home = ({
         <>
           <Logo />
           <FiltersContainer>
+            <Select
+              name="n_questions"
+              value={n_questions}
+              onChange={handleChangeSelectFilters}
+            >
+              {N_QUESTIONS.map((number) => (
+                <option key={number.value} value={number.value}>
+                  {number.label}
+                </option>
+              ))}
+            </Select>
             <Select
               name="difficulty"
               value={difficulty}

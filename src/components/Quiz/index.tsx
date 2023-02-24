@@ -7,6 +7,7 @@ import Question from "../Question";
 
 const Quiz = () => {
   const [filtersQuiz, setFiltersQuiz] = useState<FiltersQuiz>({
+    n_questions: "10",
     difficulty: "",
     type: "",
     categories: "",
@@ -32,7 +33,7 @@ const Quiz = () => {
     try {
       setIsLoadingQuiz(true);
 
-      const url = `https://opentdb.com/api.php?amount=10${
+      const url = `https://opentdb.com/api.php?amount=${+filtersQuiz.n_questions}${
         filtersQuiz.difficulty !== ""
           ? `&difficulty=${filtersQuiz.difficulty}`
           : ""
@@ -58,10 +59,10 @@ const Quiz = () => {
   };
 
   const nextQuestion = () => {
-    if (currentQuestion < 10) {
+    if (currentQuestion < +filtersQuiz.n_questions) {
       setCurrentQuestion(currentQuestion + 1);
     }
-    if (currentQuestion === 10) {
+    if (currentQuestion === +filtersQuiz.n_questions) {
       setGameOver(true);
       setQuiz([]);
       setQuestion({} as QuestionType);
@@ -90,6 +91,7 @@ const Quiz = () => {
           currentQuestion={currentQuestion}
           updateScore={updateScore}
           nextQuestion={nextQuestion}
+          filtersQuiz={filtersQuiz}
         />
       ) : (
         <Home

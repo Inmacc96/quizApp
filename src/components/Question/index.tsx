@@ -1,4 +1,4 @@
-import { QuestionType, UserAnswerType } from "../../interfaces/QuizType";
+import { QuestionType, UserAnswerType, FiltersQuiz } from '../../interfaces/QuizType';
 import { decode } from "html-entities";
 import { useEffect, useState } from "react";
 import helpers from "../../helpers";
@@ -18,6 +18,7 @@ type QuestionProps = {
   currentQuestion: number;
   updateScore: () => void;
   nextQuestion: () => void;
+  filtersQuiz: FiltersQuiz
 };
 
 const Question = ({
@@ -25,6 +26,7 @@ const Question = ({
   currentQuestion,
   updateScore,
   nextQuestion,
+  filtersQuiz
 }: QuestionProps) => {
   const {
     difficulty,
@@ -98,7 +100,7 @@ const Question = ({
       </AnswersContainer>
       {userAnswer.answerselected && (
         <NextButton data-testid="next-button" onClick={handleClickNext}>
-          {currentQuestion === 10 ? "End" : "Next"}
+          {currentQuestion === +filtersQuiz.n_questions ? "End" : "Next"}
         </NextButton>
       )}
     </Main>

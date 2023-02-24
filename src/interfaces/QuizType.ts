@@ -37,6 +37,7 @@ export interface UserAnswerType {
 }
 
 export interface FiltersQuiz {
+  n_questions: string;
   difficulty: Difficulty | "";
   type: Type | "";
   categories: string;
