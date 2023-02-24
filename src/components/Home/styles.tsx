@@ -17,6 +17,14 @@ export const Logo = styled.div`
   background-size: cover;
 `;
 
+export const Select = styled.select`
+  padding: 0.5rem;
+  border: none;
+  border-radius: 8px;
+  color: #212955;
+  font-weight: 600;
+`;
+
 export const Button = styled.button`
   padding: 1rem 2rem;
   text-transform: uppercase;

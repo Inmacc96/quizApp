@@ -1,6 +1,16 @@
-import { Button, ButtonsContainer, Logo, Main, ScoreContainer } from "./styles";
+import { DIFFICULTY } from "../../constants";
+import {
+  Button,
+  ButtonsContainer,
+  Logo,
+  Main,
+  ScoreContainer,
+  Select,
+} from "./styles";
 
 type HomeProps = {
+  difficulty: string;
+  selectDifficulty: (value: string) => void;
   getQuiz: () => Promise<void>;
   gameOver: boolean;
   score: number;
@@ -8,7 +18,21 @@ type HomeProps = {
   backHome: () => void;
 };
 
-const Home = ({ getQuiz, gameOver, score, playAgain, backHome }: HomeProps) => {
+const Home = ({
+  difficulty,
+  selectDifficulty,
+  getQuiz,
+  gameOver,
+  score,
+  playAgain,
+  backHome,
+}: HomeProps) => {
+  const handleChangeSelectDifficulty = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    selectDifficulty(e.target.value);
+  };
+
   return (
     <Main>
       {gameOver ? (
@@ -27,6 +51,13 @@ const Home = ({ getQuiz, gameOver, score, playAgain, backHome }: HomeProps) => {
       ) : (
         <>
           <Logo />
+          <Select value={difficulty} onChange={handleChangeSelectDifficulty}>
+            {DIFFICULTY.map((dif) => (
+              <option key={dif.value} value={dif.value}>
+                {dif.label}
+              </option>
+            ))}
+          </Select>
           <Button onClick={getQuiz}>Start</Button>
         </>
       )}
