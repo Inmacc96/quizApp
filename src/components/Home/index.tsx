@@ -1,3 +1,4 @@
+import ConfettiExplosion from "react-confetti-explosion";
 import {
   DIFFICULTY,
   TYPE_QUIZ,
@@ -49,6 +50,8 @@ const Home = ({
     <Main>
       {gameOver ? (
         <>
+          <ConfettiExplosion duration={3000} particleCount={250} />
+
           <ScoreContainer>
             <p>
               Your score is <br />
