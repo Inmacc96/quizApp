@@ -304,6 +304,40 @@ describe("<Question />", () => {
 
     expect(unsortAnswersSpy).toHaveBeenCalled();
 
+    unsortAnswersSpy.mockRestore();
+  });
+
+  test("The answers are unordered after rendering", () => {
+    const currentQuestion = 1;
+    const question = {
+      question:
+        "Which anime heavily features music from the genre &quot;Eurobeat&quot;?",
+      correct_answer: "Initial D",
+      incorrect_answers: ["Wangan Midnight", "Kino no Tabi", "Cowboy Bebop"],
+      difficulty: Difficulty.Easy,
+    };
+    const updateScore = vi.fn();
+    const nextQuestion = vi.fn();
+
+    const filtersQuiz: FiltersQuiz = {
+      n_questions: "10",
+      difficulty: "",
+      type: "",
+      categories: "",
+    };
+
+    const unsortAnswersSpy = vi.spyOn(helpers, "unsortAnswers");
+
+    const component = render(
+      <Question
+        question={question}
+        currentQuestion={currentQuestion}
+        updateScore={updateScore}
+        nextQuestion={nextQuestion}
+        filtersQuiz={filtersQuiz}
+      />
+    );
+
     const expectedAnswers = [
       ...question.incorrect_answers,
       question.correct_answer,
@@ -314,5 +348,5 @@ describe("<Question />", () => {
     expect(messyAnswers).toEqual(expect.arrayContaining(expectedAnswers));
 
     unsortAnswersSpy.mockRestore();
-  });
+  })
 });
