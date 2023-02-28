@@ -78,6 +78,22 @@ export const Answer = styled.button<{
   }
 `;
 
+export const ProgressContainer = styled.div`
+  width: 75%;
+  height: 20px;
+  background-color: #dcd8d1;
+  border-radius: 8px;
+`;
+
+export const Progress = styled.div<{
+  progress: number;
+}>`
+  width: ${props => props.progress}%;
+  height: 20px;
+  background-color: #13193e;
+  border-radius: 8px;
+`;
+
 export const NextButton = styled.button`
   padding: 0.8rem 1.2rem;
   text-transform: uppercase;

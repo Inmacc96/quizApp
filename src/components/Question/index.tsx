@@ -1,6 +1,10 @@
-import { QuestionType, UserAnswerType, FiltersQuiz } from '../../interfaces/QuizType';
+import {
+  QuestionType,
+  UserAnswerType,
+  FiltersQuiz,
+} from "../../interfaces/QuizType";
 import { decode } from "html-entities";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import helpers from "../../helpers";
 import {
   Container,
@@ -10,6 +14,8 @@ import {
   Answer,
   QuestionStyled,
   AnswersContainer,
+  ProgressContainer,
+  Progress,
   NextButton,
 } from "./styles";
 
@@ -18,7 +24,7 @@ type QuestionProps = {
   currentQuestion: number;
   updateScore: () => void;
   nextQuestion: () => void;
-  filtersQuiz: FiltersQuiz
+  filtersQuiz: FiltersQuiz;
 };
 
 const Question = ({
@@ -26,7 +32,7 @@ const Question = ({
   currentQuestion,
   updateScore,
   nextQuestion,
-  filtersQuiz
+  filtersQuiz,
 }: QuestionProps) => {
   const {
     difficulty,
@@ -40,6 +46,35 @@ const Question = ({
     {} as UserAnswerType
   );
   const [isClicked, setisClicked] = useState<boolean>(false);
+  const [progress, setProgress] = useState<number>(100);
+  const currentProgressRef = useRef<number>(progress);
+  const [intervalId, setIntervalId] = useState<NodeJS.Timer | null>(null);
+
+  useEffect(() => {
+    currentProgressRef.current = progress;
+  }, [progress]);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      if (currentProgressRef.current !== 0) {
+        setProgress((prevProgress) => prevProgress - 20);
+      } else {
+        setisClicked(true);
+        const userNoResponse = {
+          question: q,
+          answerselected: "",
+          correctAnswer: correct_answer,
+        };
+
+        setUserAnswer(userNoResponse);
+        clearInterval(id);
+      }
+    }, 1000);
+
+    setIntervalId(id);
+
+    return () => clearInterval(id);
+  }, [question]);
 
   useEffect(() => {
     // Añadir la correcta y desordenar las respuestas
@@ -49,9 +84,15 @@ const Question = ({
     ]);
 
     setAnswers(messyAnswers);
+    setProgress(100);
   }, [question]);
 
   const handleClickAnswer = (answer: string): void => {
+    if (intervalId) {
+      clearInterval(intervalId);
+      setIntervalId(null);
+    }
+
     setisClicked(true);
     const userAnswerUpdated = {
       question: q,
@@ -92,13 +133,18 @@ const Question = ({
             userClicked={userAnswer.answerselected === ans}
             isCorrect={userAnswer.correctAnswer === ans}
             onClick={() => handleClickAnswer(ans)}
-            disabled={!!userAnswer.answerselected}
+            disabled={!!userAnswer.answerselected || progress === 0}
           >
             {decode(ans)}
           </Answer>
         ))}
       </AnswersContainer>
-      {userAnswer.answerselected && (
+
+      {progress !== 0 && !userAnswer.answerselected ? (
+        <ProgressContainer>
+          <Progress progress={progress} />
+        </ProgressContainer>
+      ) : (
         <NextButton data-testid="next-button" onClick={handleClickNext}>
           {currentQuestion === +filtersQuiz.n_questions ? "End" : "Next"}
         </NextButton>
