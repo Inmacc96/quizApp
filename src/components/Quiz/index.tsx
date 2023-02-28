@@ -18,6 +18,7 @@ const Quiz = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState<number>(0);
   const [gameOver, setGameOver] = useState<boolean>(false);
+  const [alert, setAlert] = useState("");
 
   useEffect(() => {
     if (currentQuestion > 1) {
@@ -43,7 +44,16 @@ const Quiz = () => {
           : ""
       }`;
 
-      const quizFromApi = await getApiQuiz(url);
+      const { response_code, results: quizFromApi } = await getApiQuiz(url);
+
+      if (response_code === 1) {
+        setAlert("Not enough questions using these filters");
+      }
+
+      setTimeout(() => {
+        setAlert("");
+      }, 3000);
+
       setQuiz(quizFromApi);
       setQuestion(quizFromApi[0]);
       setCurrentQuestion(1);
@@ -97,6 +107,7 @@ const Quiz = () => {
         <Home
           filtersQuiz={filtersQuiz}
           selectFilters={selectFilters}
+          alert={alert}
           getQuiz={getQuiz}
           gameOver={gameOver}
           score={score}

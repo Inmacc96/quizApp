@@ -1,12 +1,12 @@
 import axios from "axios";
-import { ResponseQuiz, Result, Difficulty } from '../interfaces/QuizType';
+import { ResponseQuiz, Result } from '../interfaces/QuizType';
 
 export const getApiQuiz = async (url: string) => {
   const {
-    data: { results },
+    data: { results, response_code },
   } = await axios.get<ResponseQuiz>(url);
 
-  return mapfromApiQuiz(results);
+  return {response_code, results: mapfromApiQuiz(results)};
 };
 
 export const mapfromApiQuiz = (quiz: Result[]) => {

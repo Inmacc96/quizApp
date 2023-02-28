@@ -30,6 +30,13 @@ export const Select = styled.select`
   font-weight: 600;
 `;
 
+export const Alert = styled.div`
+  background-color: #9b0000;
+  color: white;
+  padding: 1rem;
+  border-radius: 8px;
+`;
+
 export const Button = styled.button`
   padding: 1rem 2rem;
   text-transform: uppercase;

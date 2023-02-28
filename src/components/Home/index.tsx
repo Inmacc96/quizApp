@@ -13,11 +13,13 @@ import {
   ScoreContainer,
   Select,
   FiltersContainer,
+  Alert,
 } from "./styles";
 
 type HomeProps = {
   filtersQuiz: FiltersQuiz;
   selectFilters: (value: FiltersQuiz) => void;
+  alert: string;
   getQuiz: () => Promise<void>;
   gameOver: boolean;
   score: number;
@@ -28,6 +30,7 @@ type HomeProps = {
 const Home = ({
   filtersQuiz,
   selectFilters,
+  alert,
   getQuiz,
   gameOver,
   score,
@@ -49,7 +52,9 @@ const Home = ({
           <ScoreContainer>
             <p>
               Your score is <br />
-              <span>{score}/{n_questions}</span>
+              <span>
+                {score}/{n_questions}
+              </span>
             </p>
           </ScoreContainer>
           <ButtonsContainer>
@@ -106,6 +111,7 @@ const Home = ({
               ))}
             </Select>
           </FiltersContainer>
+          {alert && <Alert>{alert}</Alert>}
           <Button onClick={getQuiz}>Start</Button>
         </>
       )}
