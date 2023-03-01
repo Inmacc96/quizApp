@@ -58,16 +58,6 @@ const Question = ({
     const id = setInterval(() => {
       if (currentProgressRef.current !== 0) {
         setProgress((prevProgress) => prevProgress - 20);
-      } else {
-        setisClicked(true);
-        const userNoResponse = {
-          question: q,
-          answerselected: "",
-          correctAnswer: correct_answer,
-        };
-
-        setUserAnswer(userNoResponse);
-        clearInterval(id);
       }
     }, 1000);
 
@@ -75,6 +65,20 @@ const Question = ({
 
     return () => clearInterval(id);
   }, [question]);
+
+  useEffect(() => {
+    if (progress === 0) {
+      setisClicked(true);
+      const userNoResponse = {
+        question: q,
+        answerselected: "",
+        correctAnswer: correct_answer,
+      };
+
+      setUserAnswer(userNoResponse);
+      intervalId && clearInterval(intervalId);
+    }
+  }, [progress]);
 
   useEffect(() => {
     // Añadir la correcta y desordenar las respuestas
