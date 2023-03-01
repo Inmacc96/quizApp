@@ -1,5 +1,12 @@
 import styled from "styled-components";
 
+export const MainLoading = styled.main`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const StyledSpinner = styled.svg`
   animation: rotate 2s linear infinite;
   margin: -25px 0 0 -25px;
