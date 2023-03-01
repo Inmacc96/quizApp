@@ -18,7 +18,6 @@ export const Container = styled.div`
 export const Title = styled.h1`
   font-size: 4.5rem;
   margin-top: 3rem;
-  margin-bottom: 5rem;
   color: #fff;
   font-family: "Lobster", cursive;
   text-shadow: 2px 2px 2px #818181;

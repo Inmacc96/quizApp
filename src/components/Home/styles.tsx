@@ -1,12 +1,27 @@
 import styled from "styled-components";
 import QuizLogo from "../../assets/quiz.jpg";
 
-export const Main = styled.main`
+export const MainHome = styled.main`
+  flex: 1;
+  width: 60%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+`;
+
+export const MainGameOver = styled.main`
   width: 40%;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 3rem;
+`;
+
+export const SectionHome = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 `;
 
 export const Logo = styled.div`
@@ -15,11 +30,19 @@ export const Logo = styled.div`
   border-radius: 50%;
   background-image: url(${QuizLogo});
   background-size: cover;
+  margin: 0 auto;
 `;
 
-export const FiltersContainer = styled.div`
+export const FilterContainer = styled.div`
   display: flex;
-  gap: 2rem;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const Label = styled.label`
+  font-weight: 600;
+  color: #13193e;
+  font-size: 1.1rem;
 `;
 
 export const Select = styled.select`
@@ -28,6 +51,9 @@ export const Select = styled.select`
   border-radius: 8px;
   color: #212955;
   font-weight: 600;
+  :focus {
+    box-shadow: inset 0 0 0 3px #212955;
+  }
 `;
 
 export const Alert = styled.div`
@@ -38,6 +64,7 @@ export const Alert = styled.div`
 `;
 
 export const Button = styled.button`
+  align-self: center;
   padding: 1rem 2rem;
   text-transform: uppercase;
   font-weight: 600;

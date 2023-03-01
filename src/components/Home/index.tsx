@@ -10,11 +10,14 @@ import {
   Button,
   ButtonsContainer,
   Logo,
-  Main,
   ScoreContainer,
   Select,
-  FiltersContainer,
   Alert,
+  MainGameOver,
+  MainHome,
+  SectionHome,
+  FilterContainer,
+  Label,
 } from "./styles";
 
 type HomeProps = {
@@ -47,9 +50,9 @@ const Home = ({
   };
 
   return (
-    <Main>
+    <>
       {gameOver ? (
-        <>
+        <MainGameOver>
           <ConfettiExplosion duration={3000} particleCount={250} />
 
           <ScoreContainer>
@@ -64,61 +67,78 @@ const Home = ({
             <Button onClick={playAgain}>Play Again</Button>
             <Button onClick={backHome}>Back Home</Button>
           </ButtonsContainer>
-        </>
+        </MainGameOver>
       ) : (
-        <>
+        <MainHome>
           <Logo />
-          <FiltersContainer>
-            <Select
-              name="n_questions"
-              value={n_questions}
-              onChange={handleChangeSelectFilters}
-            >
-              {N_QUESTIONS.map((number) => (
-                <option key={number.value} value={number.value}>
-                  {number.label}
-                </option>
-              ))}
-            </Select>
-            <Select
-              name="difficulty"
-              value={difficulty}
-              onChange={handleChangeSelectFilters}
-            >
-              {DIFFICULTY.map((dif) => (
-                <option key={dif.value} value={dif.value}>
-                  {dif.label}
-                </option>
-              ))}
-            </Select>
-            <Select
-              name="type"
-              value={type}
-              onChange={handleChangeSelectFilters}
-            >
-              {TYPE_QUIZ.map((type) => (
-                <option key={type.value} value={type.value}>
-                  {type.label}
-                </option>
-              ))}
-            </Select>
-            <Select
-              name="categories"
-              value={categories}
-              onChange={handleChangeSelectFilters}
-            >
-              {CATEGORIES.map((category) => (
-                <option key={category.value} value={category.value}>
-                  {category.label}
-                </option>
-              ))}
-            </Select>
-          </FiltersContainer>
-          {alert && <Alert>{alert}</Alert>}
-          <Button onClick={getQuiz}>Start</Button>
-        </>
+          <SectionHome>
+            <FilterContainer>
+              <Label htmlFor="n_questions"> Number Questions</Label>
+              <Select
+                id="n_questions"
+                name="n_questions"
+                value={n_questions}
+                onChange={handleChangeSelectFilters}
+              >
+                {N_QUESTIONS.map((number) => (
+                  <option key={number.value} value={number.value}>
+                    {number.label}
+                  </option>
+                ))}
+              </Select>
+            </FilterContainer>
+            <FilterContainer>
+              <Label htmlFor="difficulty"> Nivel Difficulty</Label>
+              <Select
+                id="difficulty"
+                name="difficulty"
+                value={difficulty}
+                onChange={handleChangeSelectFilters}
+              >
+                {DIFFICULTY.map((dif) => (
+                  <option key={dif.value} value={dif.value}>
+                    {dif.label}
+                  </option>
+                ))}
+              </Select>
+            </FilterContainer>
+            <FilterContainer>
+              <Label htmlFor="type"> Type Question</Label>
+              <Select
+                id="type"
+                name="type"
+                value={type}
+                onChange={handleChangeSelectFilters}
+              >
+                {TYPE_QUIZ.map((type) => (
+                  <option key={type.value} value={type.value}>
+                    {type.label}
+                  </option>
+                ))}
+              </Select>
+            </FilterContainer>
+            <FilterContainer>
+              <Label htmlFor="categories">Category</Label>
+              <Select
+                id="categories"
+                name="categories"
+                value={categories}
+                onChange={handleChangeSelectFilters}
+              >
+                {CATEGORIES.map((category) => (
+                  <option key={category.value} value={category.value}>
+                    {category.label}
+                  </option>
+                ))}
+              </Select>
+            </FilterContainer>
+
+            {alert && <Alert>{alert}</Alert>}
+            <Button onClick={getQuiz}>Start</Button>
+          </SectionHome>
+        </MainHome>
       )}
-    </Main>
+    </>
   );
 };
 
