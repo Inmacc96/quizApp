@@ -17,6 +17,7 @@ import {
   ProgressContainer,
   Progress,
   NextButton,
+  Section,
 } from "./styles";
 
 type QuestionProps = {
@@ -119,7 +120,8 @@ const Question = ({
   };
 
   return (
-    <Main>
+   <Main>
+     <Section>
       <Container>
         <NumberQuestion>{currentQuestion}</NumberQuestion>
         <h2>Question</h2>
@@ -153,7 +155,8 @@ const Question = ({
           {currentQuestion === +filtersQuiz.n_questions ? "End" : "Next"}
         </NextButton>
       )}
-    </Main>
+    </Section>
+   </Main>
   );
 };
 

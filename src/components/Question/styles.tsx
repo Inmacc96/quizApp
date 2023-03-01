@@ -2,9 +2,17 @@ import styled from "styled-components";
 import { Difficulty } from "../../interfaces/QuizType";
 
 export const Main = styled.main`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+`;
+
+export const Section = styled.section`
+  width: 50%;
   border: 2.5px solid #13193e;
   border-radius: 20px;
-  width: 30%;
   padding: 2.5rem 2rem;
   display: flex;
   flex-direction: column;
@@ -88,7 +96,7 @@ export const ProgressContainer = styled.div`
 export const Progress = styled.div<{
   progress: number;
 }>`
-  width: ${props => props.progress}%;
+  width: ${(props) => props.progress}%;
   height: 20px;
   background-color: #13193e;
   border-radius: 8px;
