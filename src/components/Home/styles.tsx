@@ -11,7 +11,15 @@ export const MainHome = styled.main`
 `;
 
 export const MainGameOver = styled.main`
-  width: 40%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+`;
+
+export const SectionGameOver = styled.section`
+  width: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;

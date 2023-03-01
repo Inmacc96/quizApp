@@ -18,6 +18,7 @@ import {
   SectionHome,
   FilterContainer,
   Label,
+  SectionGameOver,
 } from "./styles";
 
 type HomeProps = {
@@ -53,20 +54,21 @@ const Home = ({
     <>
       {gameOver ? (
         <MainGameOver>
-          <ConfettiExplosion duration={3000} particleCount={250} />
-
-          <ScoreContainer>
-            <p>
-              Your score is <br />
-              <span>
-                {score}/{n_questions}
-              </span>
-            </p>
-          </ScoreContainer>
-          <ButtonsContainer>
-            <Button onClick={playAgain}>Play Again</Button>
-            <Button onClick={backHome}>Back Home</Button>
-          </ButtonsContainer>
+          <SectionGameOver>
+            <ScoreContainer>
+              <ConfettiExplosion duration={3000} particleCount={250} />
+              <p>
+                Your score is <br />
+                <span>
+                  {score}/{n_questions}
+                </span>
+              </p>
+            </ScoreContainer>
+            <ButtonsContainer>
+              <Button onClick={playAgain}>Play Again</Button>
+              <Button onClick={backHome}>Back Home</Button>
+            </ButtonsContainer>
+          </SectionGameOver>
         </MainGameOver>
       ) : (
         <MainHome>
