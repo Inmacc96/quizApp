@@ -92,6 +92,7 @@ export const Progress = styled.div<{
   height: 20px;
   background-color: #13193e;
   border-radius: 8px;
+  transition: 1s ease;
 `;
 
 export const NextButton = styled.button`
