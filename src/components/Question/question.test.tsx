@@ -1,5 +1,9 @@
 import { describe, test, vi, expect } from "vitest";
-import { render } from "@testing-library/react";
+import {
+  render,
+  waitFor,
+  waitForElementToBeRemoved,
+} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Question from ".";
 import { Difficulty, FiltersQuiz } from "../../interfaces/QuizType";
@@ -43,7 +47,7 @@ describe("<Question />", () => {
     component.getByText(question.difficulty);
   });
 
-  test("clicking on an answer, the button is disabled", async () => {
+  test("clicking on an answer, the answers buttons are disabled", async () => {
     const user = userEvent.setup();
 
     const currentQuestion = 1;
@@ -78,8 +82,10 @@ describe("<Question />", () => {
 
     await user.click(answerButton);
 
-    const disabledAnswerButton = component.getByText(question.correct_answer);
-    expect(disabledAnswerButton).toBeDisabled();
+    const answers = component.queryAllByTestId(/response \d+/);
+    answers.forEach((answerButton) => {
+      expect(answerButton).toBeDisabled();
+    });
   });
 
   test("clicking on the correct answer, updateScore is called once", async () => {
@@ -348,5 +354,203 @@ describe("<Question />", () => {
     expect(messyAnswers).toEqual(expect.arrayContaining(expectedAnswers));
 
     unsortAnswersSpy.mockRestore();
-  })
+  });
+
+  test("The progress bar appears when the component is rendered", () => {
+    const currentQuestion = 1;
+    const question = {
+      question:
+        "Which anime heavily features music from the genre &quot;Eurobeat&quot;?",
+      correct_answer: "Initial D",
+      incorrect_answers: ["Wangan Midnight", "Kino no Tabi", "Cowboy Bebop"],
+      difficulty: Difficulty.Easy,
+    };
+    const updateScore = vi.fn();
+    const nextQuestion = vi.fn();
+
+    const filtersQuiz: FiltersQuiz = {
+      n_questions: "10",
+      difficulty: "",
+      type: "",
+      categories: "",
+    };
+
+    const component = render(
+      <Question
+        question={question}
+        currentQuestion={currentQuestion}
+        updateScore={updateScore}
+        nextQuestion={nextQuestion}
+        filtersQuiz={filtersQuiz}
+      />
+    );
+
+    const progressBar = component.getByTestId("progress-bar");
+
+    expect(progressBar).toBeInTheDocument();
+  });
+
+  test("The progress bar updates correctly", async () => {
+    const currentQuestion = 1;
+    const question = {
+      question:
+        "Which anime heavily features music from the genre &quot;Eurobeat&quot;?",
+      correct_answer: "Initial D",
+      incorrect_answers: ["Wangan Midnight", "Kino no Tabi", "Cowboy Bebop"],
+      difficulty: Difficulty.Easy,
+    };
+    const updateScore = vi.fn();
+    const nextQuestion = vi.fn();
+
+    const filtersQuiz: FiltersQuiz = {
+      n_questions: "10",
+      difficulty: "",
+      type: "",
+      categories: "",
+    };
+
+    const component = render(
+      <Question
+        question={question}
+        currentQuestion={currentQuestion}
+        updateScore={updateScore}
+        nextQuestion={nextQuestion}
+        filtersQuiz={filtersQuiz}
+      />
+    );
+
+    const progress = component.getByTestId("progress-bar").querySelector("div");
+    expect(progress).toHaveStyle({ width: "100%" });
+
+    await waitFor(() => expect(progress).toHaveStyle({ width: "80%" }), {
+      timeout: 1000,
+    });
+  });
+
+  test(
+    "the next botton appears when the progress bar disappears",
+    async () => {
+      const currentQuestion = 1;
+      const question = {
+        question:
+          "Which anime heavily features music from the genre &quot;Eurobeat&quot;?",
+        correct_answer: "Initial D",
+        incorrect_answers: ["Wangan Midnight", "Kino no Tabi", "Cowboy Bebop"],
+        difficulty: Difficulty.Easy,
+      };
+      const updateScore = vi.fn();
+      const nextQuestion = vi.fn();
+
+      const filtersQuiz: FiltersQuiz = {
+        n_questions: "10",
+        difficulty: "",
+        type: "",
+        categories: "",
+      };
+
+      const component = render(
+        <Question
+          question={question}
+          currentQuestion={currentQuestion}
+          updateScore={updateScore}
+          nextQuestion={nextQuestion}
+          filtersQuiz={filtersQuiz}
+        />
+      );
+
+      await waitForElementToBeRemoved(component.getByTestId("progress-bar"), {
+        timeout: 5500,
+      });
+
+      const nextButton = component.getByTestId("next-button");
+      expect(nextButton).toBeInTheDocument();
+    },
+    { timeout: 5500 }
+  );
+
+  test(
+    "the question is self-evaluated when the progress bar disappears",
+    async () => {
+      const currentQuestion = 1;
+      const question = {
+        question:
+          "Which anime heavily features music from the genre &quot;Eurobeat&quot;?",
+        correct_answer: "Initial D",
+        incorrect_answers: ["Wangan Midnight", "Kino no Tabi", "Cowboy Bebop"],
+        difficulty: Difficulty.Easy,
+      };
+      const updateScore = vi.fn();
+      const nextQuestion = vi.fn();
+
+      const filtersQuiz: FiltersQuiz = {
+        n_questions: "10",
+        difficulty: "",
+        type: "",
+        categories: "",
+      };
+
+      const component = render(
+        <Question
+          question={question}
+          currentQuestion={currentQuestion}
+          updateScore={updateScore}
+          nextQuestion={nextQuestion}
+          filtersQuiz={filtersQuiz}
+        />
+      );
+
+      await waitForElementToBeRemoved(component.getByTestId("progress-bar"), {
+        timeout: 7000,
+      });
+
+      const answers = component.queryAllByTestId(/response \d+/);
+      answers.forEach((answerButton) => {
+        expect(answerButton).toBeDisabled();
+      });
+
+      const correctAnswer = component.getByText(question.correct_answer);
+      expect(correctAnswer).toHaveStyle({ "background-color": "#108407" });
+    },
+    { timeout: 7000 }
+  );
+
+  test(
+    "the updateScore function is not called if the progress bar has finished",
+    async () => {
+      const currentQuestion = 1;
+      const question = {
+        question:
+          "Which anime heavily features music from the genre &quot;Eurobeat&quot;?",
+        correct_answer: "Initial D",
+        incorrect_answers: ["Wangan Midnight", "Kino no Tabi", "Cowboy Bebop"],
+        difficulty: Difficulty.Easy,
+      };
+      const updateScore = vi.fn();
+      const nextQuestion = vi.fn();
+
+      const filtersQuiz: FiltersQuiz = {
+        n_questions: "10",
+        difficulty: "",
+        type: "",
+        categories: "",
+      };
+
+      const component = render(
+        <Question
+          question={question}
+          currentQuestion={currentQuestion}
+          updateScore={updateScore}
+          nextQuestion={nextQuestion}
+          filtersQuiz={filtersQuiz}
+        />
+      );
+
+      await waitForElementToBeRemoved(component.getByTestId("progress-bar"), {
+        timeout: 6000,
+      });
+
+      expect(updateScore).not.toHaveBeenCalled();
+    },
+    { timeout: 6000 }
+  );
 });

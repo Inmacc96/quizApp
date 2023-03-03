@@ -120,43 +120,44 @@ const Question = ({
   };
 
   return (
-   <Main>
-     <Section>
-      <Container>
-        <NumberQuestion>{currentQuestion}</NumberQuestion>
-        <h2>Question</h2>
-        <DifficultyQuestion difficulty={difficulty}>
-          {difficulty}
-        </DifficultyQuestion>
-      </Container>
-      <QuestionStyled>{decode(q)}</QuestionStyled>
+    <Main>
+      <Section>
+        <Container>
+          <NumberQuestion>{currentQuestion}</NumberQuestion>
+          <h2>Question</h2>
+          <DifficultyQuestion difficulty={difficulty}>
+            {difficulty}
+          </DifficultyQuestion>
+        </Container>
+        <QuestionStyled>{decode(q)}</QuestionStyled>
 
-      <AnswersContainer>
-        {answers.map((ans) => (
-          <Answer
-            key={Math.random().toString(36).substring(2)}
-            isClicked={isClicked}
-            userClicked={userAnswer.answerselected === ans}
-            isCorrect={userAnswer.correctAnswer === ans}
-            onClick={() => handleClickAnswer(ans)}
-            disabled={!!userAnswer.answerselected || progress === 0}
-          >
-            {decode(ans)}
-          </Answer>
-        ))}
-      </AnswersContainer>
+        <AnswersContainer>
+          {answers.map((ans, i) => (
+            <Answer
+              data-testid={`response ${i}`}
+              key={Math.random().toString(36).substring(2)}
+              isClicked={isClicked}
+              userClicked={userAnswer.answerselected === ans}
+              isCorrect={userAnswer.correctAnswer === ans}
+              onClick={() => handleClickAnswer(ans)}
+              disabled={!!userAnswer.answerselected || progress === 0}
+            >
+              {decode(ans)}
+            </Answer>
+          ))}
+        </AnswersContainer>
 
-      {progress !== 0 && !userAnswer.answerselected ? (
-        <ProgressContainer>
-          <Progress progress={progress} />
-        </ProgressContainer>
-      ) : (
-        <NextButton data-testid="next-button" onClick={handleClickNext}>
-          {currentQuestion === +filtersQuiz.n_questions ? "End" : "Next"}
-        </NextButton>
-      )}
-    </Section>
-   </Main>
+        {progress !== 0 && !userAnswer.answerselected ? (
+          <ProgressContainer data-testid="progress-bar">
+            <Progress progress={progress} />
+          </ProgressContainer>
+        ) : (
+          <NextButton data-testid="next-button" onClick={handleClickNext}>
+            {currentQuestion === +filtersQuiz.n_questions ? "End" : "Next"}
+          </NextButton>
+        )}
+      </Section>
+    </Main>
   );
 };
 
